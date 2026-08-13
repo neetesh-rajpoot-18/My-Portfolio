@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-color="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neetesh Rajpoot - Data Analyst</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            /* Base Colors (Light Mode) */
+            --sidebar-bg: #031530;
+            --main-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-dark: #111928;
+            --text-gray: #4b5563;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            --card-shadow-hover: 0 15px 35px rgba(0,0,0,0.1);
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --icon-bg: #f0f5ff;
+            --project-bg: #fafafa;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --sidebar-bg: #020813;
+            --main-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-dark: #f8fafc;
+            --text-gray: #94a3b8;
+            --border-color: #334155;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --card-shadow-hover: 0 20px 40px rgba(0,0,0,0.6);
+            --nav-bg: rgba(30, 41, 59, 0.85);
+            --icon-bg: #334155;
+            --project-bg: #0f172a;
+        }
+
+        /* --- COLOR THEMES (The Mixer) --- */
+        [data-color="blue"] {
+            --accent-color: #1c64f2;
+            --accent-light: rgba(28, 100, 242, 0.2);
+            --accent-icon-bg: #dbeafe;
+        }
+        [data-color="green"] {
+            --accent-color: #10b981;
+            --accent-light: rgba(16, 185, 129, 0.2);
+            --accent-icon-bg: #d1fae5;
+        }
+        [data-color="purple"] {
+            --accent-color: #8b5cf6;
+            --accent-light: rgba(139, 92, 246, 0.2);
+            --accent-icon-bg: #ede9fe;
+        }
+        [data-color="rose"] {
+            --accent-color: #f43f5e;
+            --accent-light: rgba(244, 63, 94, 0.2);
+            --accent-icon-bg: #ffe4e6;
+        }
+        [data-color="orange"] {
+            --accent-color: #f59e0b;
+            --accent-light: rgba(245, 158, 11, 0.2);
+            --accent-icon-bg: #fef3c7;
+        }
+        [data-color="cyan"] {
+            --accent-color: #06b6d4;
+            --accent-light: rgba(6, 182, 212, 0.2);
+            --accent-icon-bg: #cffafe;
+        }
+        /* The Animated Mix Base Color (Starts Pink, Animates through spectrum) */
+        [data-color="mix"] {
+            --accent-color: #ec4899; 
+            --accent-light: rgba(236, 72, 153, 0.2);
+            --accent-icon-bg: #fce7f3;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Global Smooth Color Change Animation */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            /* Makes switching themes a smooth, fluid animation */
+            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, color 0.5s ease-in-out, box-shadow 0.5s ease;
+        }
+
+        body {
+            background-color: transparent;
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-color: var(--main-bg);
+            overflow: hidden;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: moveBlob 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: 20%;
+            width: 500px;
+            height: 500px;
+            background-color: var(--accent-light);
+            border-radius: 50%;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: 10%;
+            width: 600px;
+            height: 600px;
+            background-color: var(--accent-light);
+            border-radius: 50%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        [data-theme="dark"] .blob { opacity: 0.25; }
+
+        @keyframes moveBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(150px, 50px) scale(1.1); }
+            66% { transform: translate(-50px, 150px) scale(0.9); }
+            100% { transform: translate(50px, -50px) scale(1); }
+        }
+
+        /* --- CONTINUOUS COLOR CHANGE ANIMATION (MIX THEME) --- */
+        @keyframes dynamicColorMixer {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Apply the continuous color change only when "Mix" is active */
+        [data-color="mix"] .skill-icon,
+        [data-color="mix"] .sidebar h2,
+        [data-color="mix"] .contact-item i,
+        [data-color="mix"] .exp-title,
+        [data-color="mix"] .project-title,
+        [data-color="mix"] .cert-item i,
+        [data-color="mix"] .project-link-hint,
+        [data-color="mix"] .btn-download,
+        [data-color="mix"] .section-header i,
+        [data-color="mix"] .profile-img-container {
+            animation: dynamicColorMixer 5s linear infinite !important;
+        }
+
+        /* Keep blobs moving while changing colors */
+        [data-color="mix"] .blob-1 {
+            animation: dynamicColorMixer 6s linear infinite, moveBlob 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        [data-color="mix"] .blob-2 {
+            animation: dynamicColorMixer 8s linear infinite reverse, moveBlob 30s infinite alternate cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        /* --- CONTENT ANIMATIONS --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 0 0 var(--accent-light); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+        }
+
+        /* --- ANIMATED LOGOS --- */
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .skill-icon {
+            font-size: 20px;
+            color: var(--accent-color);
+            width: 24px;
+            text-align: center;
+            margin-top: 2px;
+            display: inline-block;
+            animation: floatLogo 3s ease-in-out infinite;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .skill-group:hover .skill-icon {
+            transform: rotateY(360deg) scale(1.3);
+            animation-play-state: paused;
+            color: #ffffff;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            padding: 2px;
+            box-shadow: 0 5px 15px var(--accent-light);
+        }
+
+        .animate-item {
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* SIDEBAR STYLES */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            color: #ffffff;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            background-image: radial-gradient(circle at 50% 100%, var(--accent-light) 0%, transparent 60%);
+            z-index: 1000;
+        }
+
+        .profile-img-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            padding: 4px;
+            margin-bottom: 20px;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .profile-img-container:hover {
+            transform: scale(1.05);
+            animation: pulseBorder 1.5s infinite;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .sidebar h2 {
+            font-size: 16px;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .contact-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: #e5e7eb;
+            text-decoration: none;
+        }
+        
+        .contact-item:hover { transform: translateX(8px); }
+        .contact-item a { color: #e5e7eb; text-decoration: none; transition: color 0.3s; }
+        .contact-item a:hover { color: var(--accent-color); }
+
+        .contact-item i {
+            color: var(--accent-color);
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover i { transform: scale(1.2) rotate(15deg); }
+
+        .btn-download {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--accent-light);
+        }
+
+        /* MAIN CONTENT STYLES */
+        .main-content {
+            flex: 1;
+            margin-left: 320px;
+            padding: 20px 40px;
+            max-width: 1200px;
+        }
+
+        /* NAVBAR & THEME CONTROLS */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover { color: var(--accent-color); }
+        .nav-links li a:hover::after { width: 100%; }
+
+        /* Theme Control Panel */
+        .theme-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+        }
+
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .color-btn:hover { 
+            transform: scale(1.2); 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .c-blue { background-color: #1c64f2; }
+        .c-green { background-color: #10b981; }
+        .c-purple { background-color: #8b5cf6; }
+        .c-rose { background-color: #f43f5e; }
+        .c-orange { background-color: #f59e0b; }
+        .c-cyan { background-color: #06b6d4; }
+        
+        /* The Mix Button (Animated Gradient Background) */
+        @keyframes gradientPan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .c-mix { 
+            background: linear-gradient(45deg, #ff007f, #00d4ff, #00ff7f, #ff007f); 
+            background-size: 300% 300%;
+            animation: gradientPan 3s ease infinite;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover { color: var(--accent-color); }
+
+        /* CARDS & SECTIONS */
+        section { scroll-margin-top: 100px; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background: linear-gradient(to bottom right, var(--card-bg), rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(10px);
+        }
+        
+        [data-theme="dark"] .card {
+            background: linear-gradient(to bottom right, var(--card-bg), rgba(30, 41, 59, 0.95));
+        }
+
+        .card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-header i {
+            color: var(--accent-color);
+            font-size: 18px;
+            background: var(--icon-bg);
+            padding: 8px;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card:hover .section-header i {
+            transform: rotate(360deg) scale(1.1);
+            background: var(--accent-icon-bg);
+        }
+
+        /* SUMMARY */
+        .summary p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            width: 70%;
+        }
+        
+        .summary-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-icon-container {
+            font-size: 80px; 
+            color: var(--border-color); 
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .chart-icon-container {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* GRID LAYOUT FOR SECTIONS */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* SKILLS */
+        .skill-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .skill-group:hover {
+            transform: translateX(5px);
+            background: var(--icon-bg);
+        }
+
+        .skill-details h4 {
+            font-size: 13px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .skill-details p {
+            font-size: 12px;
+            color: var(--text-gray);
+            line-height: 1.4;
+        }
+
+        /* EXPERIENCE */
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .exp-title {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a.exp-title:hover {
+            text-decoration: underline;
+            color: var(--text-dark);
+        }
+
+        .exp-date {
+            font-size: 12px;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .list-items { list-style: none; }
+
+        .list-items li {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-gray);
+            line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+
+        .list-items li:hover { color: var(--text-dark); }
+
+        .list-items li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* --- ISOMETRIC PROJECTS GRID --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            perspective: 1500px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            background: var(--project-bg);
+            text-decoration: none; 
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                        box-shadow 0.6s ease, border-color 0.5s ease, background 0.5s ease;
+        }
+
+        .project-card > * {
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .project-image-container {
+            width: calc(100% + 30px);
+            margin: -15px -15px 15px -15px;
+            height: 140px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .project-card:hover {
+            transform: rotateX(15deg) rotateY(-15deg) rotateZ(2deg) translateZ(30px) translateY(-10px);
+            box-shadow: 25px 25px 40px rgba(0,0,0,0.15), -5px -5px 15px rgba(255,255,255,0.4);
+            border-color: var(--accent-color);
+            background: var(--card-bg);
+        }
+
+        [data-theme="dark"] .project-card:hover {
+            box-shadow: 25px 25px 40px rgba(0,0,0,0.6), -5px -5px 15px rgba(255,255,255,0.05);
+        }
+
+        .project-card:hover .project-image-container {
+            transform: translateZ(40px); 
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .project-card:hover .project-image-container img {
+            transform: scale(1.15); 
+        }
+
+        .project-card:hover .project-header {
+            transform: translateZ(30px); 
+        }
+
+        .project-card:hover .list-items {
+            transform: translateZ(20px); 
+        }
+
+        .project-card:hover .project-link-hint {
+            transform: translateZ(35px); 
+            color: var(--accent-color);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .project-header-top {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tech-stack {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .project-card .list-items {
+            flex-grow: 1;
+        }
+
+        .project-link-hint {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            transition: color 0.3s ease, transform 0.6s ease;
+            text-decoration: none;
+        }
+
+        .project-link-hint:hover {
+            color: var(--accent-color);
+        }
+
+        /* EDUCATION & CERTIFICATIONS */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .edu-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+            border-left: 2px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .edu-item:hover {
+            border-color: var(--accent-color);
+            transform: translateX(10px);
+        }
+
+        .edu-item::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 2px;
+            width: 10px;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 50%;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .edu-item:hover::before {
+            background: var(--accent-color);
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .edu-degree {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .edu-date, .edu-school {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--text-dark);
+            transition: transform 0.3s ease;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .cert-item:hover {
+            transform: translateX(8px);
+            background: var(--icon-bg);
+        }
+
+        .cert-item i {
+            color: var(--accent-color);
+            font-size: 16px;
+            margin-top: 2px;
+        }
+        
+        .score {
+            font-size: 12px;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-container, .bottom-grid, .projects-grid { grid-template-columns: 1fr; }
+            .summary p { width: 100%; }
+            .chart-icon-container { display: none; }
+            .project-card:hover { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BACKGROUND ANIMATION CONTAINER -->
+    <div class="animated-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="profile-img-container">
+            <img src="https://github.com/neetesh-rajpoot-18.png" alt="Neetesh Rajpoot">
+        </div>
+        
+        <h1>Neetesh Rajpoot</h1>
+        <h2>Data Analyst</h2>
+        
+        <div class="tagline">
+            Turning Data into Insights.<br>Driving Decisions.
+        </div>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Bhopal, India</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <span>+91-6261804363</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <a href="mailto:rneetesh03@gmail.com">rneetesh03@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fa-brands fa-linkedin"></i>
+                <a href="https://linkedin.com/in/neetesh-rajpoot" target="_blank">linkedin.com/in/neetesh-rajpoot</a>
+            </div>
+            <div class="contact-item">
+                <i class="fa-brands fa-github"></i>
+                <a href="https://github.com/neetesh-rajpoot-18" target="_blank">github.com/neetesh-rajpoot-18</a>
+            </div>
+        </div>
+        
+        <a class="btn-download"
+           href="https://github.com/neetesh-rajpoot-18/My-Resume/raw/refs/heads/main/NEET_RES_8_JULY.pdf"
+           download="NEET_RES_8_JULY.pdf"
+           target="_blank"
+           rel="noopener noreferrer">
+            <i class="fa-solid fa-download"></i>
+            Download Resume
+        </a>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT -->
+    <main class="main-content">
+        
+        <!-- NAVBAR WITH THEME CONTROLS -->
+        <header class="navbar animate-item">
+            <div style="color: var(--accent-color); font-size: 20px; transition: color 0.5s ease-in-out;">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+            </ul>
+            
+            <div class="theme-controls">
+                <!-- Color Mixers -->
+                <div class="color-btn c-blue" data-color="blue" title="Blue Theme"></div>
+                <div class="color-btn c-green" data-color="green" title="Green Theme"></div>
+                <div class="color-btn c-purple" data-color="purple" title="Purple Theme"></div>
+                <div class="color-btn c-rose" data-color="rose" title="Rose Theme"></div>
+                <div class="color-btn c-orange" data-color="orange" title="Orange Theme"></div>
+                <div class="color-btn c-cyan" data-color="cyan" title="Cyan Theme"></div>
+                <div class="color-btn c-mix" data-color="mix" title="Animated Rainbow Theme"></div>
+                
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- PROFESSIONAL SUMMARY -->
+        <section id="about" class="card summary animate-item delay-1">
+            <div class="section-header">
+                <i class="fa-solid fa-user"></i> PROFESSIONAL SUMMARY
+            </div>
+            <div class="summary-container">
+                <p>
+                    Results-oriented Data Analyst and Computer Science graduate (B.Tech, 2026) with hands-on experience in data cleaning, statistical analysis, machine learning, and business intelligence reporting. Delivered end-to-end analytics solutions on 1,470+ records using a Random Forest model (86% accuracy) and Power BI dashboards tracking attrition KPIs. Proficient in Python, SQL, and Power BI with a strong ability to translate complex data into actionable insights for both technical and non-technical stakeholders.
+                </p>
+                <div class="chart-icon-container">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid-container">
+            <!-- TECHNICAL SKILLS -->
+            <section id="skills" class="card animate-item delay-2">
+                <div class="section-header">
+                    <i class="fa-solid fa-gear"></i> TECHNICAL SKILLS
+                </div>
+                
+                <div class="skill-group">
+                    <i class="fa-brands fa-python skill-icon"></i>
+                    <div class="skill-details">
+                        <h4>Languages:</h4>
+                        <p>Python (Advanced), SQL, MySQL, Java</p>
+                    </div>
+                </div>
+                
+                <div class="skill-group">
+                    <i class="fa-solid fa-brain skill-icon"></i>
+                    <div class="skill-details">
+                        <h4>Analytics & Machine Learning:</h4>
+                        <p>Scikit-learn, NumPy, Pandas, EDA, Feature Engineering, Statistical Analysis, Data Cleaning, Data Pipeline</p>
+                    </div>
+                </div>
+                
+                <div class="skill-group">
+                    <i class="fa-solid fa-chart-simple skill-icon"></i>
+                    <div class="skill-details">
+                        <h4>Business Intelligence & Visualization:</h4>
+                        <p>Power BI, DAX, KPI Reporting, Tableau, Seaborn, Matplotlib, Microsoft Excel</p>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <i class="fa-solid fa-database skill-icon"></i>
+                    <div class="skill-details">
+                        <h4>Databases:</h4>
+                        <p>MySQL queries, joins, subqueries, ETL pipelines</p>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <i class="fa-solid fa-code skill-icon"></i>
+                    <div class="skill-details">
+                        <h4>Tools:</h4>
+                        <p>Jupyter Notebook, Git, GitHub, VS Code, IntelliJ IDEA</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="right-col">
+                <!-- WORK EXPERIENCE -->
+                <section id="experience" class="card animate-item delay-3">
+                    <div class="section-header">
+                        <i class="fa-solid fa-briefcase"></i> 
+                        <a href="https://github.com/neetesh-rajpoot-18/Work-experience" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.5s ease-in-out;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='inherit'">
+                            WORK EXPERIENCE
+                        </a>
+                    </div>
+                    <div class="exp-header">
+                        <a href="https://github.com/neetesh-rajpoot-18/Work-experience" target="_blank" class="exp-title">
+                            Sports Data Analyst (Remote) | Catch Sports Analytics
+                        </a>
+                        <div class="exp-date"><i class="fa-regular fa-calendar"></i> Jul 2026 – Present</div>
+                    </div>
+                    <ul class="list-items">
+                        <li>Watching game videos across American Football, Basketball, Volleyball, and Baseball/Softball to understand plays and match context.</li>
+                        <li>Tagging key in-game events using VidSwap and other in-house tools to build structured, analysis-ready datasets.</li>
+                        <li>Following defined workflows and guidance to ensure consistent, accurate data logging across matches.</li>
+                        <li>Helping coaches and team staff get better insights into player and team performance.</li>
+                    </ul>
+                    <a href="https://github.com/neetesh-rajpoot-18/Work-experience" target="_blank" class="project-link-hint">
+                        View Work Experience on GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </section>
+
+                <!-- PROJECTS -->
+                <section id="projects" class="card animate-item delay-4">
+                    <div class="section-header">
+                        <i class="fa-solid fa-folder"></i> PROJECTS
+                    </div>
+                    <div class="projects-grid">
+                        
+                        <!-- Project 1 -->
+                        <a href="https://github.com/neetesh-rajpoot-18/HR-Attrition-Analysis-Prediction-and-Dashboard" target="_blank" class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="HR Dashboard Interface">
+                            </div>
+                            <div class="project-header">
+                                <i class="fa-solid fa-users" style="font-size: 20px; padding: 8px; border-radius: 6px; color: var(--accent-color); background: var(--icon-bg);"></i>
+                                <div style="width: 100%;">
+                                    <div class="project-header-top">
+                                        <span class="project-title">HR Attrition Analysis</span>
+                                        <span class="exp-date">Apr 2026</span>
+                                    </div>
+                                    <div class="tech-stack">Python · Power BI · DAX · Scikit-learn</div>
+                                </div>
+                            </div>
+                            <ul class="list-items" style="font-size: 12px;">
+                                <li>Built end-to-end data pipeline on a 1,470-record HR dataset; identified key attrition drivers.</li>
+                                <li>Trained Random Forest Classifier achieving 86% accuracy; reduced analysis scope by 40%.</li>
+                            </ul>
+                            <div class="project-link-hint">
+                                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+                        
+                        <!-- Project 2 -->
+                        <a href="https://github.com/neetesh-rajpoot-18/Cricket_stats_anlytics_ipl_25" target="_blank" class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=600&q=80" alt="Cricket Stadium">
+                            </div>
+                            <div class="project-header">
+                                <i class="fa-solid fa-baseball-bat-ball" style="font-size: 20px; padding: 8px; border-radius: 6px; color: var(--accent-color); background: var(--icon-bg);"></i>
+                                <div style="width: 100%;">
+                                    <div class="project-header-top">
+                                        <span class="project-title">Cricket Statistics</span>
+                                        <span class="exp-date">Mar 2026</span>
+                                    </div>
+                                    <div class="tech-stack">Python · SQL · Power BI · Seaborn</div>
+                                </div>
+                            </div>
+                            <ul class="list-items" style="font-size: 12px;">
+                                <li>Consolidated cricket performance data for 100+ players; automated ETL pipeline.</li>
+                                <li>Modeled key metrics — batting average, strike rate, bowling economy using SQL.</li>
+                            </ul>
+                            <div class="project-link-hint">
+                                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+
+                        <!-- Project 3 -->
+                        <a href="https://github.com/neetesh-rajpoot-18/Sales-Performance-Dashboard-Tabluea" target="_blank" class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Sales Performance Dashboard">
+                            </div>
+                            <div class="project-header">
+                                <i class="fa-solid fa-chart-line" style="font-size: 20px; padding: 8px; border-radius: 6px; color: var(--accent-color); background: var(--icon-bg);"></i>
+                                <div style="width: 100%;">
+                                    <div class="project-header-top">
+                                        <span class="project-title">Sales Performance Dashboard</span>
+                                        <span class="exp-date">Jun 2026</span>
+                                    </div>
+                                    <div class="tech-stack">Tableau · SQL · Excel</div>
+                                </div>
+                            </div>
+                            <ul class="list-items" style="font-size: 12px;">
+                                <li>Designed an interactive Tableau dashboard to track regional sales performance, revenue growth, and profit margins.</li>
+                                <li>Implemented dynamic filters and drill-down capabilities, enabling stakeholders to identify top-performing products and trends.</li>
+                            </ul>
+                            <div class="project-link-hint">
+                                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+
+                        <!-- Project 4 -->
+                        <a href="https://github.com/neetesh-rajpoot-18/Uber-Analytic-Dashboard" target="_blank" class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80" alt="Uber Analytics Dashboard">
+                            </div>
+                            <div class="project-header">
+                                <i class="fa-solid fa-car" style="font-size: 20px; padding: 8px; border-radius: 6px; color: var(--accent-color); background: var(--icon-bg);"></i>
+                                <div style="width: 100%;">
+                                    <div class="project-header-top">
+                                        <span class="project-title">Uber Analytics Dashboard</span>
+                                        <span class="exp-date">Jul 2026</span>
+                                    </div>
+                                    <div class="tech-stack">Python · Power BI · SQL · Pandas</div>
+                                </div>
+                            </div>
+                            <ul class="list-items" style="font-size: 12px;">
+                                <li>Analyzed comprehensive Uber trip datasets to uncover ride volume trends, peak hours, and geographical hotspots.</li>
+                                <li>Developed dynamic visual dashboards visualizing key metrics like average fare, trip duration, and demand forecasting.</li>
+                            </ul>
+                            <div class="project-link-hint">
+                                View on GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </a>
+                        
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <!-- EDUCATION -->
+            <section id="education" class="card animate-item delay-5">
+                <div class="section-header">
+                    <i class="fa-solid fa-graduation-cap"></i> EDUCATION
+                </div>
+                
+                <div class="edu-item">
+                    <div class="edu-header">
+                        <span class="edu-degree">B.Tech Computer Science (Data Science)</span>
+                        <span class="edu-date">Jul 2022 – Jun 2026</span>
+                    </div>
+                    <div class="edu-school">Oriental College of Technology, RGPV, Bhopal, India</div>
+                </div>
+
+                <div class="edu-item">
+                    <div class="edu-header">
+                        <span class="edu-degree">Senior Secondary (Class 12), CBSE</span>
+                        <span class="edu-date">Mar 2021</span>
+                    </div>
+                    <div class="edu-school">Saket M.G.M Sr. Sec. School, Vidisha, M.P</div>
+                    <div class="score">74%</div>
+                </div>
+
+                <div class="edu-item">
+                    <div class="edu-header">
+                        <span class="edu-degree">Secondary (Class 10), CBSE</span>
+                        <span class="edu-date">Mar 2019</span>
+                    </div>
+                    <div class="edu-school">Samarpan Public School, Mandi Bamora, M.P</div>
+                    <div class="score">74%</div>
+                </div>
+            </section>
+
+            <!-- CERTIFICATIONS -->
+            <section id="certifications" class="card animate-item delay-5">
+                <div class="section-header">
+                    <i class="fa-solid fa-certificate"></i> CERTIFICATIONS & LEARNING
+                </div>
+                
+                <a href="https://github.com/neetesh-rajpoot-18/Repository/blob/main/dataa.jpeg"
+                   target="_blank" rel="noopener noreferrer" class="cert-item"
+                   style="text-decoration: none;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>Data Analytics Job Simulation</strong> — Deloitte (Forage), Jun 2026
+                    </div>
+                </a>
+                
+
+                <a href="https://github.com/neetesh-rajpoot-18/Repository/blob/main/pow.jpeg"
+                   target="_blank" rel="noopener noreferrer" class="cert-item"
+                   style="text-decoration: none;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>30 Days Power BI Micro Course</strong> — SkillCourse, May 2026
+                    </div>
+                </a>
+                
+                <a href="https://github.com/neetesh-rajpoot-18/Repository/blob/main/tab.jpeg"
+                   target="_blank" rel="noopener noreferrer" class="cert-item"
+                   style="text-decoration: none;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>Introduction to Tableau</strong> — Basics, upGrad, Jun 2026
+                    </div>
+                </a>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- JAVASCRIPT FOR THEMES -->
+    <script>
+        const html = document.documentElement;
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const colorBtns = document.querySelectorAll('.color-btn');
+
+        // Toggle Dark/Light Mode
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            }
+        });
+
+        // Change Accent Colors
+        colorBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const selectedColor = e.target.getAttribute('data-color');
+                html.setAttribute('data-color', selectedColor);
+            });
+        });
+    </script>
+</body>
+</html>
